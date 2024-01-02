@@ -280,8 +280,15 @@ function distinct(arr) {
  *    createNDimensionalArray(4, 2) => [[[[0, 0], [0, 0]], [[0, 0], [0, 0]]], [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]]
  *    createNDimensionalArray(1, 1) => [0]
  */
-function createNDimensionalArray(/* n, size */) {
-  throw new Error('Not implemented');
+function createNDimensionalArray(n, size) {
+  const fillArray = (dimension) => {
+    if (dimension === 1) {
+      return 0;
+    }
+    return new Array(size).fill(fillArray(dimension - 1));
+  };
+
+  return fillArray(n);
 }
 
 /**
@@ -530,8 +537,30 @@ function findCommonElements(arr1, arr2) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  const storageArr = [];
+
+  nums.reduce((counter, _, i) => {
+    if (nums[i] < nums[i + 1]) {
+      return counter + 1;
+    }
+    storageArr.push(counter);
+    return 1;
+  }, 1);
+
+  return Math.max(...storageArr, 0);
+
+  // const storageArr = [];
+  // let counter = 1;
+  // for (let i = 0; i < nums.length; i += 1) {
+  //   if (nums[i] < nums[i + 1]) {
+  //     counter += 1;
+  //   } else {
+  //     storageArr.push(counter);
+  //     counter = 1;
+  //   }
+  // }
+  // return Math.max(...storageArr);
 }
 
 /**
@@ -565,8 +594,10 @@ function propagateItemsByPositionIndex(arr) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  const nn = Math.abs(n);
+  const iters = nn > arr.length ? nn % arr.length : nn;
+  return arr.concat(arr.splice(0, n > 0 ? arr.length - iters : iters));
 }
 
 /**
