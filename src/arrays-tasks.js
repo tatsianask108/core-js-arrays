@@ -281,14 +281,14 @@ function distinct(arr) {
  *    createNDimensionalArray(1, 1) => [0]
  */
 function createNDimensionalArray(n, size) {
-  const fillArray = (dimension) => {
-    if (dimension === 1) {
-      return 0;
-    }
-    return new Array(size).fill(fillArray(dimension - 1));
-  };
+  if (n === 0) {
+    return 0;
+  }
 
-  return fillArray(n);
+  const createArrayRecursive = (lvl) =>
+    lvl === n ? 0 : new Array(size).fill(createArrayRecursive(lvl + 1));
+
+  return createArrayRecursive(0);
 }
 
 /**
